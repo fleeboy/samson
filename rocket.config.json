@@ -1,0 +1,55 @@
+{
+    "model": {
+        "counter": "COUNTER_MAX", 
+        "started": false,      
+        "launched": false, 
+        "aborted": false
+    },
+    "states": [
+        {
+            "indentifier": "ready",
+            "predicate": "(model.counter === COUNTER_MAX) && !model.started && !model.launched && !model.aborted",
+            "template": [
+                "<p>Counter: ${model.counter}</p>",
+                "<form onSubmit=\"JavaScript:return app.actions.start({});\">",
+                "    <input type=\"submit\" value=\"Start\">",
+                "</form>"
+            ],
+            "viewModel": null,
+            "nextAction": null,
+            "childStates": []
+        },
+        {
+            "indentifier": "counting",
+            "predicate": "(model.counter <= COUNTER_MAX) && (model.counter >= 0) && model.started && !model.launched && !model.aborted",
+            "template": ["<p>Count down:${model.counter}</p>",
+                "<form onSubmit=\"JavaScript:return app.actions.abort({});\">",
+                "    <input type=\"submit\" value=\"Abort\">",
+                "</form>"],
+            "viewModel": "",
+            "nextAction": "",
+            "childStates": []
+        },
+        {
+            "indentifier": "launched",
+            "predicate": "(model.counter == 0) && model.started && model.launched && !model.aborted",
+            "template": "",
+            "viewModel": "",
+            "nextAction": "",
+            "childStates": []
+        },
+        {
+            "indentifier": "aborted",
+            "predicate": "(model.counter <= COUNTER_MAX) && (model.counter >= 0) && model.started && !model.launched && model.aborted",
+            "template": "",
+            "viewModel": "",
+            "nextAction": "",
+            "childStates": []
+        }
+    ],
+    "actions": [
+        {
+            "identifier": "start"
+        }
+    ]
+}
